@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Movie;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 
 class MovieController extends Controller
 {
@@ -28,7 +29,7 @@ class MovieController extends Controller
      */
     public function create()
     {
-        //
+        return view('movie-create');
     }
 
     /**
@@ -39,7 +40,14 @@ class MovieController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // THIS IS POST, when you hit submit to create a new movie.
+
+        $movie = new Movie();
+        $movie->name = $request->input('name', 'untitled');
+        $movie->description = $request->input('description','');
+        $movie->save();
+
+        return redirect()->route('movie_by_id', ['id' => $movie->id]);
     }
 
     /**

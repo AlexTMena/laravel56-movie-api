@@ -17,8 +17,8 @@ class CreateMoviesTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->text('description');
-            $table->date('showingDate');
-            $table->time('movieLength');
+            // $table->date('showingDate');
+            // $table->time('movieLength');
             $table->timestamps();
         });
     }
