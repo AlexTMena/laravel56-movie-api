@@ -1,0 +1,1 @@
+// HTML to show the details of the movie, and update/delete it.

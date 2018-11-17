@@ -14,7 +14,11 @@ class MovieController extends Controller
      */
     public function index()
     {
-        //
+        $movies = Movie::all();
+
+        // echo json_encode( $movies->toArray() );
+
+        return view('movies',compact('movies')); 
     }
 
     /**
