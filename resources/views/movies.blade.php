@@ -9,9 +9,11 @@
 	
 
 	<div class="row">
-		
+
 		{{ $movie->name }}
 		
+		<a href="/movie/{{ $movie->id }}">View details</a>
+
 	</div>
 
 @endforeach

@@ -50,7 +50,7 @@ class MovieController extends Controller
      */
     public function show(Movie $movie)
     {
-        //
+        return view('movie-read',compact('movie'));
     }
 
     /**
@@ -85,5 +85,23 @@ class MovieController extends Controller
     public function destroy(Movie $movie)
     {
         //
+    }
+
+
+    /**
+     * Display the specified resource using id.
+     *
+     * @param  $id The movie id
+     * @return \App\Movie->show()
+     */
+    public function fetch_by_id(int $id)
+    {
+        $movie = \App\Movie::find($id);
+
+        if ( ! $movie ) {
+            return abort(404);
+        }
+
+        return $this->show( $movie );
     }
 }
