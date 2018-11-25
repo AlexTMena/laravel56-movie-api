@@ -25,3 +25,6 @@ Route::get('/api/v1/movies', function() {
 	$movies = \App\Movie::all();
 	return json_encode( $movies->toArray() );
 });
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
