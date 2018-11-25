@@ -43,8 +43,8 @@ class MovieController extends Controller
         // THIS IS POST, when you hit submit to create a new movie.
 
         $movie = new Movie();
-        $movie->name = $request->input('name', 'untitled');
-        $movie->description = $request->input('description','');
+        $movie->name = $request->name //input('name', 'untitled');
+        $movie->description = $request->description //input('description','');
         $movie->save();
 
         return redirect()->route('movie_by_id', ['id' => $movie->id]);
@@ -112,4 +112,33 @@ class MovieController extends Controller
 
         return $this->show( $movie );
     }
+
+
+    // creating new movie by sending JSON request.
+
+    // CSRF
+    // Option 1. Disable CSRF for this laravel site.
+    // Option 2. Register this route as "api" group.
+    public function store_by_json_post( Request $request ) {
+
+        // post request
+        // $post['json'] = '{ "name": "Title", "description": "Description" }';
+        // json_decode( $post['json']);
+
+        $json_request = ''; // <~~ kunin mo yung JSON na sinend gamit yung POST
+
+        // extract attributes.
+        $name = $json_request->name;
+        $description = $json_request->description;
+
+        // save the new movie.
+        $movie = new Movie();
+        $movie->name = $name;
+        $movie->description = $description;
+        $movie->save();
+
+        return $movie->toJson();
+    }
+
+
 }
