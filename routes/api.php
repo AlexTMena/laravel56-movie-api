@@ -28,7 +28,7 @@ Route::post('login', function (Request $request) {
     if (auth()->attempt(['email' => $request->input('email'), 'password' => $request->input('password')])) {
         // Authentication passed...
         $user = auth()->user();
-        $user->api_token = str_random(60);
+        $user->generateToken();
         $user->save();
         return $user;
     }
@@ -39,18 +39,7 @@ Route::post('login', function (Request $request) {
     ], 401);
 });
 
-Route::post('register', function(Request $request) {
-    $name = App\User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
-    $name->save();
-    if (!$name->save){
-        return response()->json([
-            'error' => 'Please check information given']);
-    };
-});
+Route::post('register', 'Auth\RegisterController@register');
 
 Route::middleware('auth:api')->post('logout', function (Request $request) {
 
