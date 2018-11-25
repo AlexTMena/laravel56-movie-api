@@ -19,7 +19,7 @@ class MovieController extends Controller
 
         // echo json_encode( $movies->toArray() );
 
-        return view('movies',compact('movies')); 
+        return $movies;
     }
 
     /**
@@ -42,12 +42,12 @@ class MovieController extends Controller
     {
         // THIS IS POST, when you hit submit to create a new movie.
 
-        $movie = new Movie();
-        $movie->name = $request->name //input('name', 'untitled');
-        $movie->description = $request->description //input('description','');
-        $movie->save();
+    //    $movie = new Movie();
+    //    $movie->name = $request->name //input('name', 'untitled');
+    //    $movie->description = $request->description // input('description','');
+    //    $movie->save();
 
-        return redirect()->route('movie_by_id', ['id' => $movie->id]);
+    //    return redirect()->route('movie_by_id', ['id' => $movie->id]);
     }
 
     /**

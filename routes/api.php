@@ -14,9 +14,9 @@ use Illuminate\Http\Request;
 */
 
 /* Setup CORS */
-header('Access-Control-Allow-Origin: *');
-header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method, Authorization");
-header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
+// header('Access-Control-Allow-Origin: *');
+// header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method, Authorization");
+// header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
@@ -39,6 +39,19 @@ Route::post('login', function (Request $request) {
     ], 401);
 });
 
+Route::post('register', function(Request $request) {
+    $name = App\User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+        ]);
+    $name->save();
+    if (!$name->save){
+        return response()->json([
+            'error' => 'Please check information given']);
+    };
+});
+
 Route::middleware('auth:api')->post('logout', function (Request $request) {
 
     if (auth()->user()) {
@@ -56,3 +69,10 @@ Route::middleware('auth:api')->post('logout', function (Request $request) {
         'code' => 401,
     ], 401);
 });
+
+Route::get('/api/movies', function() {
+    $movies = \App\Movie::all();
+    return json_encode( $movies->toArray() );
+});
+
+Route::get('/movies', 'MovieController@index');
